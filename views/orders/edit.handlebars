@@ -1,0 +1,55 @@
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<div class="container">
+  <h1>Edit Order</h1>
+
+  {{#if success}}
+    <div class="message-success">{{success}}</div>
+  {{/if}}
+
+  {{#if error}}
+    <div class="message-error">{{error}}</div>
+  {{/if}}
+
+  <form action="/orders/edit/{{order._id}}" method="POST">
+
+    <!-- Display customer name as read-only -->
+    <label>Customer Name</label>
+    <input type="text" value="{{order.customerName}}" disabled />
+
+    {{!-- Loop through each order item --}}
+    {{#each order.items}}
+      <div class="order-item">
+        <label>Menu Item</label>
+        <select name="items[{{@index}}][menuItemId]" required>
+          <option value="">-- Select item --</option>
+
+          {{#each ../menus}}
+            {{#each items}}
+              <option value="{{_id}}" {{#if selected}} selected {{/if}}>
+  {{name}} – D{{price}} 
+</option>
+
+            {{/each}}
+          {{/each}}
+
+        </select>
+
+        <label>Quantity</label>
+        <input
+          type="number"
+          name="items[{{@index}}][quantity]"
+          min="1"
+          value="{{this.quantity}}"
+          required
+        />
+
+        <input type="hidden" name="items[{{@index}}][price]" value="{{this.price}}" />
+      </div>
+    {{/each}}
+
+    <button class="btn" type="submit">Update Order</button>
+  </form>
+
+          <a href="/orders/my" class="btn">Show My Orders</a>
+</div>

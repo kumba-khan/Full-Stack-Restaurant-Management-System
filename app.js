@@ -1,30 +1,59 @@
 import express from "express";
+import session from "express-session";
+import methodOverride from "method-override";
+
+import { engine } from "express-handlebars";
 import dotenv from "dotenv";
 import connectDB from "./config/db.js";
 
+// Routes
 import authRoutes from "./routes/authRoutes.js";
+import dashboardRoutes from "./routes/dashboardRoutes.js";
 import menuRoutes from "./routes/menuRoutes.js";
 import orderRoutes from "./routes/orderRoutes.js";
 
-import { errorHandler } from "./middleware/errorHandlebars.js";
+import { errorHandler } from "./middleware/authMiddleware.js";
 
 dotenv.config();
+const app = express();
+
 connectDB();
 
-const app = express();
-const PORT = process.env.PORT || 5000;
-
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(methodOverride("_method"));
 
-// ROUTES
+// Session
+app.use(
+  session({
+    secret: "keyboard cat",
+    resave: false,
+    saveUninitialized: false,
+  })
+);
+
+app.use(express.static("public"));
+
+app.engine(
+  "handlebars",
+  engine({
+    defaultLayout: "main",
+    extname: ".handlebars",
+    helpers: {
+      inc: (value) => parseInt(value) + 1,
+      eq: (a, b) => a === b,
+    },
+  })
+);
+app.set("view engine", "handlebars");
+app.set("views", "./views");
+
+// Routes
 app.use("/auth", authRoutes);
+app.use("/", dashboardRoutes);
 app.use("/menu", menuRoutes);
 app.use("/orders", orderRoutes);
 
-// ERROR HANDLER (always last)
 app.use(errorHandler);
 
-// SERVER
-app.listen(PORT, () => {
-  console.log(`server running on http://localhost:${PORT}`);
-});
+app.listen(4500, () => console.log("Server running on http://localhost:4500"));

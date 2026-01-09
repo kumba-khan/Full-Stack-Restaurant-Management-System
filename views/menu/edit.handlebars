@@ -1,0 +1,73 @@
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Great+Vibes&family=Manrope:wght@200..800&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+  rel="stylesheet">
+<div class="container">
+  <h1>Edit Menu</h1>
+
+  {{#if success}}
+    <div class="message-success">{{success}}</div>
+  {{/if}}
+
+  {{#if error}}
+    <div class="message-error">{{error}}</div>
+  {{/if}}
+
+  <!-- UPDATE ENTIRE MENU FORM (for title + new items) -->
+  <form action="/menu/edit/{{menu._id}}" method="POST">
+    <label>Menu Title</label>
+    <input type="text" name="title" value="{{menu.title}}" required />
+
+    <h2>Existing Items</h2>
+    {{#each menu.items}}
+      <div class="menu-item">
+        <input type="hidden" name="items[{{@index}}][_id]" value="{{_id}}" />
+
+        <label>Name</label>
+        <input type="text" name="items[{{@index}}][name]" value="{{name}}" required />
+
+        <label>Price</label>
+        <input type="number" name="items[{{@index}}][price]" value="{{price}}" step="0.01" required />
+
+        <!-- UPDATE THIS ITEM ONLY -->
+        <form action="/menu/item/{{../menu._id}}/{{_id}}/update" method="POST" style="display:inline;">
+          <input type="hidden" name="name" value="{{name}}">
+          <input type="hidden" name="price" value="{{price}}">
+          <button type="submit" class="btn btn-warning">Update Item</button>
+        </form>
+
+  <a href="/menu" class="btn">Menu List</a>
+
+        <!-- DELETE THIS ITEM -->
+        <form action="/menu/item/{{../menu._id}}/{{_id}}/delete" method="POST" style="display:inline;">
+          <button type="submit" class="btn btn-danger">Delete Item</button>
+        </form>
+      </div>
+    {{/each}}
+
+   <h2>Add New Items</h2>
+{{#each newItemSlots}}
+  <form action="/menu/item/{{../menu._id}}/add" method="POST" class="menu-item">
+    <label>Name</label>
+    <input type="text" name="name" required />
+
+    <label>Price</label>
+    <input type="number" name="price" step="0.01" required />
+
+    <button type="submit" class="btn btn-success">Add Item</button>
+  </form>
+{{/each}}
+
+
+    <!-- Update Menu Title + new items -->
+    <button type="submit" class="btn">Update Menu</button>
+  </form>
+
+  <!-- Navigation buttons -->
+  <a href="/menu" class="btn">Menu List</a>
+  <a href="/menu/cards" class="btn">View Menu Cards</a>
+  <a href="/" class="btn">Go to Home</a>
+</div>

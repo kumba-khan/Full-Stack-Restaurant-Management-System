@@ -1,0 +1,42 @@
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" href="/css/style.css" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Great+Vibes&family=Manrope:wght@200..800&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+  rel="stylesheet"
+/>
+
+<div class="container" style="height: 90vh;">
+  <h1>Create Menu</h1>
+
+  <form action="/menu/create" method="POST">
+
+    <label>Menu Title</label>
+    <input type="text" name="title" required />
+
+    {{#each itemCount}}
+      <div class="menu-item">
+        <legend>Food Item {{inc @index}}</legend>
+
+        <label>Name</label>
+        <input type="text" name="items[{{@index}}][name]" />
+
+        <label>Price</label>
+        <input type="number" name="items[{{@index}}][price]" step="0.01" />
+        <div class="list-btns">
+          <button type="submit" class="btn">Create Menu</button>
+        </div>
+      </div>
+    {{/each}}
+
+    <div class="list-btns">
+      <button type="submit" class="btn">Create Menu</button>
+      <a href="/menu/cards" class="btn">View Menu Cards</a>
+      <a href="/" class="btn">Go to Home</a>
+    </div>
+
+  </form>
+</div>

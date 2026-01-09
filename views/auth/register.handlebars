@@ -1,0 +1,67 @@
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<style>
+  @import
+  url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&display=swap');
+</style>
+<link
+  href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap"
+  rel="stylesheet"
+/>
+
+<div class="auth-box">
+  <h2 class="title">Register</h2>
+
+  {{#if success}}
+    <div class="message-success">{{success}}</div>
+  {{/if}}
+
+  {{#if error}}
+    <div class="message-error">{{error}}</div>
+  {{/if}}
+
+  <form action="/auth/register" method="POST">
+    <label class="form-label">Name</label>
+    <input
+      class="form-input"
+      type="text"
+      name="name"
+      placeholder="Name"
+      required
+    />
+
+    <label class="form-label">Email</label>
+    <input
+      class="form-input"
+      type="email"
+      name="email"
+      placeholder="Email"
+      required
+    />
+
+    <label class="form-label">Password</label>
+    <input
+      class="form-input"
+      type="password"
+      name="password"
+      placeholder="Password"
+      required
+    />
+
+    <label class="form-label">Confirm Password</label>
+    <input
+      class="form-input"
+      type="password"
+      name="confirmPassword"
+      placeholder="Confirm Password"
+      required
+    />
+
+    <button class="form-btn" type="submit">Register</button>
+  </form>
+
+  <p class="switch-box">
+    Already have an account?
+    <a class="switch-link" href="/auth/login">Login</a>
+  </p>
+</div>

@@ -1,0 +1,60 @@
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" href="/css/style.css" />
+
+<div class="container">
+  <h1>All Orders</h1>
+
+  {{#if success}}
+    <div class="message-success">{{success}}</div>
+  {{/if}}
+
+  {{#if error}}
+    <div class="message-error">{{error}}</div>
+  {{/if}}
+
+  <table>
+    <tr>
+      <th>ID</th>
+      <th>Customer Name</th>
+      <th>Items</th>
+      <th>Total</th>
+      <th>Actions</th>
+    </tr>
+    {{#each orders}}
+      <tr class="table-data">
+        <td>{{this.display}}</td>
+        <td>{{this.customerName}}</td>
+
+        <td>
+          {{#each this.items}}
+            {{this.name}}
+            x
+            {{this.quantity}}
+            - D{{this.price}}
+            <br />
+          {{/each}}
+        </td>
+
+        <td>D{{this.total}}</td>
+        <td>
+          <a href="/orders/edit/{{this._id}}" class="btn">Edit</a>
+          <form
+            action="/orders/delete/{{this._id}}?_method=DELETE"
+            method="POST"
+            style="display: inline;"
+          >
+            <button type="submit" class="btn">Delete</button>
+          </form>
+
+        </td>
+      </tr>
+    {{/each}}
+  </table>
+
+  <div class="list-btns">
+    <!--<a href="/orders/create" class="btn">Create New Order</a> -->
+    <a href="/" class="btn">Go to Home</a>
+  </div>
+
+</div>

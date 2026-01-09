@@ -1,0 +1,51 @@
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" href="/css/style.css" />
+
+<div class="container">
+  <h1>Create Order</h1>
+
+  {{#if success}}
+    <div class="message-success">{{success}}</div>
+  {{/if}}
+
+  {{#if error}}
+    <div class="message-error">{{error}}</div>
+  {{/if}}
+
+  <form action="/orders/create" method="POST">
+
+    <h3>Order Items</h3>
+
+    <div class="order-item">
+      <select name="items[0][menuItemId]" required>
+        <option value="">-- Select item from menu --</option>
+        {{#each menus}}
+          {{#each items}}
+            <option value="{{_id}}">
+              {{name}}
+              – D{{price}}
+            </option>
+          {{/each}}
+        {{/each}}
+      </select>
+
+      <input
+        type="number"
+        name="items[0][quantity]"
+        min="1"
+        placeholder="Quantity"
+        required
+      />
+    </div>
+
+    <!-- Duplicate order-item for more items if needed -->
+
+    <div class="list-btns">
+      <button type="submit" class="btn">Create Order</button>
+      <a href="/orders/my" class="btn">Show My Orders</a>
+      <a href="/" class="btn">Go to Home</a>
+    </div>
+
+  </form>
+</div>

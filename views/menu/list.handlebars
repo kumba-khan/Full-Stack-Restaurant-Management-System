@@ -1,0 +1,57 @@
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" href="/public/css/style.css" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Great+Vibes&family=Manrope:wght@200..800&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+  rel="stylesheet"
+/>
+<div class="container">
+  <h1>All Menu Items</h1>
+
+  {{#if success}}
+    <div class="message-success">{{success}}</div>
+  {{/if}}
+
+  {{#if error}}
+    <div class="message-error">{{error}}</div>
+  {{/if}}
+
+  <table>
+    <tr>
+      <th>Title</th>
+      <th>Food Items</th>
+      <th>Actions</th>
+    </tr>
+    {{#each menus}}
+      <tr class="table-data">
+        <td>{{this.title}}</td>
+        <div class="items">
+          <td>
+            {{#each this.items}}
+              {{this.name}}
+              - D{{this.price}}<br />
+            {{/each}}
+          </td>
+        </div>
+
+        <td>
+          <a href="/menu/edit/{{this._id}}" class="btn">Edit</a>
+          <form
+            action="/menu/delete/{{this._id}}"
+            method="POST"
+            style="display: inline;"
+          >
+            <button type="submit" class="btn">Delete</button>
+          </form>
+        </td>
+      </tr>
+    {{/each}}
+  </table>
+
+  <div class="list-btns">
+    <a href="/" class="btn">Go to Home</a>
+  </div>
+
+</div>

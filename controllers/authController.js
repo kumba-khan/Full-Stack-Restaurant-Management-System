@@ -1,60 +1,64 @@
 import User from "../models/User.js";
 import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
 
+// Registration Function
 export const register = async (req, res, next) => {
   try {
-    const { name, email, password } = req.body;
+    const { name, email, password, confirmPassword } = req.body;
 
-    const exists = await User.findOne({ email });
-    if (exists)
-      return res.status(400).json({
-        message: "Email already exists",
-      });
+    if (!name || !email || !password || !confirmPassword) {
+      return res.render("auth/register", { error: "All fields are required." });
+    }
 
-    const hashed = await bcrypt.hash(password, 10);
+    if (password !== confirmPassword) {
+      return res.render("auth/register", { error: "Passwords do not match." });
+    }
 
-    const user = await User.create({ name, email, password: hashed });
+    const exists = await User.findOne({ email }).lean();
+    if (exists) {
+      return res.render("auth/register", { error: "Email already exists." });
+    }
 
-    res.status(201).json({ message: "User Registered Successfully", user });
-  } catch (error) {
-    next(err);
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    await User.create({ name, email, password: hashedPassword });
+
+    res.render("auth/login", {
+      success: "Registration successful! Please login.",
+    });
+  } catch (err) {
+    console.error(err);
+    res.render("auth/register", { error: "Something went wrong. Try again." });
   }
 };
 
+// Login Function
 export const login = async (req, res, next) => {
   try {
     const { email, password } = req.body;
-
-    const user = await User.findOne({ email }); // ✅ define first
+    const user = await User.findOne({ email }).lean();
 
     if (!user) {
-      return res.status(404).json({
-        success: false,
-        message: "User not found",
-      });
+      return res.render("auth/login", { error: "User not found." });
     }
 
     const isMatch = await bcrypt.compare(password, user.password);
-
     if (!isMatch) {
-      return res.status(400).json({
-        success: false,
-        message: "Emails don't Match",
-      });
+      return res.render("auth/login", { error: "Invalid password." });
     }
 
-    // now you can use user
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
-      expiresIn: "7d",
-    });
+    // Save user in session
+    req.session.user = user;
 
-    return res.json({
-      success: true,
-      message: "Logged in successfully",
-      token,
-    });
-  } catch (error) {
-    next(error);
+    res.redirect("/");
+  } catch (err) {
+    next(err);
   }
+};
+//l Logout Function
+export const logout = (req, res) => {
+  req.session.destroy((err) => {
+    if (err) return res.redirect("/");
+    res.redirect("/auth/login");
+  });
 };

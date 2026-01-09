@@ -1,0 +1,53 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Great+Vibes&family=Manrope:wght@200..800&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/public/css/style.css" />
+    <title>Document</title>
+  </head>
+  <body>
+
+    <div class="container">
+      <h1 class="home-title">Restaurant Management System</h1>
+
+      {{#if user}}
+        <h3 class="home-subtitle">Welcome, {{user.name}}!</h3>
+      {{else}}
+        <h3 class="home-subtitle">Select a section</h3>
+      {{/if}}
+
+      <div class="card-grid">
+
+        {{! ADMIN ONLY }}
+        {{#if (eq user.role "admin")}}
+          <a href="/menu/create" class="card">Create Menu</a>
+          <a href="/menu" class="card">Show All Menus</a>
+        {{/if}}
+
+        {{! EVERYONE LOGGED IN }}
+        <a href="/menu/cards" class="card">View Menu Cards</a>
+
+        {{! NORMAL USER ONLY }}
+        {{#if (eq user.role "user")}}
+          <a href="/orders/create" class="card">Create Your Order</a>
+          <!--  <a href="/orders/my" class="card">Show My Orders</a> -->
+        {{/if}}
+
+        {{! ADMIN ONLY }}
+        {{#if (eq user.role "admin")}}
+          <a href="/orders" class="card">Show All Orders</a>
+        {{/if}}
+
+        <a href="/auth/logout" class="card">Logout</a>
+
+      </div>
+    </div>
+
+  </body>
+</html>

@@ -1,0 +1,48 @@
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<style>
+  @import
+  url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&display=swap');
+</style>
+<link
+  href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap"
+  rel="stylesheet"
+/>
+<div class="auth-box">
+  <h2 class="title">Login</h2>
+
+  {{#if success}}
+    <div class="message-success">{{success}}</div>
+  {{/if}}
+
+  {{#if error}}
+    <div class="message-error">{{error}}</div>
+  {{/if}}
+
+  <form action="/auth/login" method="POST">
+    <label class="form-label">Email</label>
+    <input
+      class="form-input"
+      type="email"
+      name="email"
+      placeholder="Email"
+      required
+    />
+
+    <label class="form-label">Password</label>
+    <input
+      class="form-input"
+      type="password"
+      name="password"
+      placeholder="Password"
+      required
+    />
+
+    <button class="form-btn" type="submit">Login</button>
+  </form>
+
+  <p class="switch-box">
+    No account?
+    <a class="switch-link" href="/auth/register">Register</a>
+  </p>
+</div>

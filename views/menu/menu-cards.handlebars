@@ -1,0 +1,40 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Great+Vibes&family=Manrope:wght@200..800&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="/css/menu-cards.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1 class="page-title">{{title}}</h1>
+    <h3 class="sub-header">Check Menu Cards Available To Create Order/s</h3>
+
+    <section class="menu">
+      {{#each menuItems}}
+        <figure class="menu-card">
+          <img src="{{image}}" alt="{{name}}" />
+
+          <figcaption>
+            <h3>{{name}}</h3>
+            <p class="description">{{description}}</p>
+            <span class="price">D{{price}}</span>
+            <!-- <a href="/menu" class="btn btn-card">Go to menu list</a> -->
+          </figcaption>
+        </figure>
+      {{/each}}
+
+    </section>
+    <div class="list-btns">
+      <a href="/orders/create" class="btn">Create Order</a>
+      <a href="/menu/create" class="btn">Create Menu</a>
+      <a href="/" class="btn">Go to Home</a>
+    </div>
+  </body>
+</html>

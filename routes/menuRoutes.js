@@ -1,23 +1,55 @@
 import express from "express";
+import {
+  getMenus,
+  createMenu,
+  updateMenu,
+  deleteMenu,
+  deleteMenuItem,
+  showCreateMenu,
+  showEditMenu,
+  getMenuCards,
+} from "../controllers/menuController.js";
+
+import {
+  authMiddleware,
+  roleMiddleware,
+} from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
-import {
-  createMenu,
-  getMenu,
-  getMenuById,
-  addFoodItem,
-  updateMenu,
-  deleteMenu,
-} from "../controllers/menuController.js";
+router.get("/cards", authMiddleware, getMenuCards);
 
-import { authMiddleware } from "../middleware/authMiddleware.js";
+router.get("/", authMiddleware, roleMiddleware(["admin"]), getMenus);
 
-router.post("/", authMiddleware, createMenu);
-router.get("/", authMiddleware, getMenu);
-router.get("/:id", authMiddleware, getMenuById);
-router.patch("/:id/add-item", authMiddleware, addFoodItem);
-router.patch("/:id", authMiddleware, updateMenu);
-router.delete("/:id", authMiddleware, deleteMenu);
+router.get(
+  "/create",
+  authMiddleware,
+  roleMiddleware(["admin"]),
+  showCreateMenu
+);
+
+router.post("/create", authMiddleware, roleMiddleware(["admin"]), createMenu);
+
+router.post("/edit/:id", authMiddleware, roleMiddleware(["admin"]), updateMenu);
+
+router.get(
+  "/edit/:id",
+  authMiddleware,
+  roleMiddleware(["admin"]),
+  showEditMenu
+);
+router.post(
+  "/delete/:id",
+  authMiddleware,
+  roleMiddleware(["admin"]),
+  deleteMenu
+);
+
+router.post(
+  "/item/:menuId/:itemId/delete",
+  authMiddleware,
+  roleMiddleware(["admin"]),
+  deleteMenuItem
+);
 
 export default router;

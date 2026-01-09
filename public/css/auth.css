@@ -1,0 +1,102 @@
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-family: Arial, Helvetica, sans-serif;
+
+  background-image: url("https://popmenucloud.com/cdn-cgi/image/width%3D1920%2Cheight%3D1920%2Cfit%3Dscale-down%2Cformat%3Dauto%2Cquality%3D60/jwutdrmk/67f010e1-4698-4340-9ba4-a1c9428699f1.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  max-width: 100%;
+  height: auto;
+}
+
+.auth-box {
+  background: #4b3b29;
+  width: 22%;
+  min-width: 20rem;
+  padding: min(4.69vw, 1.875rem);
+  border-radius: 20px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* INPUTS */
+.auth-box label {
+  font-size: min(3.25vw, 1.3rem);
+  margin-top: min(1.56vw, 0.625rem);
+  display: block;
+  color: #fefae0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.auth-box input {
+  width: 100%;
+  padding: min(1.875vw, 0.75rem);
+  margin-top: min(0.78vw, 0.3125rem);
+  border: 2px solid #fb8500;
+  border-radius: 15px;
+  font-size: min(2.5vw, 1rem);
+  background-color: #b6ad90;
+  color: #fefae0;
+}
+
+.auth-box button {
+  width: 100%;
+  margin-top: min(3.125vw, 1.25rem);
+  padding: min(1.875vw, 0.75rem);
+  background-color: #fb8500;
+  border: none;
+  color: #fff;
+  border-radius: 15px;
+  cursor: pointer;
+  font-size: min(2.5vw, 1rem);
+}
+
+.auth-box button:hover {
+  background-color: #995405;
+}
+
+.auth-box p {
+  margin-top: min(2.344vw, 0.94rem);
+  text-align: center;
+  font-size: min(2.19vw, 0.875rem);
+}
+
+.auth-box a {
+  color: #fb8500;
+  text-decoration: none;
+}
+
+.auth-box a:hover {
+  text-decoration: underline;
+}
+
+.message-success {
+  background-color: #d1fae5;
+  color: #074b38;
+  padding: 10px;
+  border-radius: 6px;
+  margin-bottom: 15px;
+}
+
+.message-error {
+  background-color: #fee2e2;
+  color: #991b1b;
+  padding: 10px;
+  border-radius: 6px;
+  margin-bottom: 15px;
+}
+
+.switch-box {
+  text-align: center;
+  margin-top: 15px;
+  color: #fefae0;
+  font-size: 1.1rem;
+}
+
+/* for register page */
+.title {
+  font-size: min(10vw, 4rem);
+}
