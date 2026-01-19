@@ -52,7 +52,7 @@ export const createOrder = async (req, res) => {
     );
 
     await Order.create({
-      user: req.user._id, // 👈 from session
+      user: req.user._id,
       items: orderItems,
       total,
     });
@@ -71,14 +71,11 @@ export const createOrder = async (req, res) => {
 // List all orders
 export const listOrders = async (req, res, next) => {
   try {
-    const orders = await Order.find()
-      .populate("user", "name") // populate user name
-      .lean();
+    const orders = await Order.find().populate("user", "name").lean();
 
     for (const order of orders) {
       order.displayId = order._id.toString().substring(0, 4);
 
-      // ✅ Safe access
       order.customerName = order.user ? order.user.name : "Unknown";
 
       // console.log(
