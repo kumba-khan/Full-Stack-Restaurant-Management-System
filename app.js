@@ -29,7 +29,7 @@ app.use(
     secret: "keyboard cat",
     resave: false,
     saveUninitialized: false,
-  })
+  }),
 );
 
 app.use(express.static("public"));
@@ -43,7 +43,7 @@ app.engine(
       inc: (value) => parseInt(value) + 1,
       eq: (a, b) => a === b,
     },
-  })
+  }),
 );
 app.set("view engine", "handlebars");
 app.set("views", "./views");
@@ -56,4 +56,5 @@ app.use("/orders", orderRoutes);
 
 app.use(errorHandler);
 
-app.listen(4500, () => console.log("Server running on http://localhost:4500"));
+const PORT = process.env.PORT || 4500;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
