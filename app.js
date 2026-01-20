@@ -17,7 +17,7 @@ import { errorHandler } from "./middleware/authMiddleware.js";
 dotenv.config();
 const app = express();
 
-connectDB();
+// connectDB();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -57,4 +57,20 @@ app.use("/orders", orderRoutes);
 app.use(errorHandler);
 
 const PORT = process.env.PORT || 4500;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
+// app.listen(PORT, () => console.log(`Server running on port: ${PORT}`));
+const startServer = async () => {
+  try {
+    await connectDB();
+    console.log("✅ Database connected successfully");
+
+    app.listen(PORT, () => {
+      console.log(`🚀 Server is humming on port ${PORT}`);
+    });
+  } catch (error) {
+    console.error("❌ Database connection failed:", error.message);
+    process.exit(1);
+  }
+};
+
+startServer();
